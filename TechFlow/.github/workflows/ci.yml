@@ -1,0 +1,29 @@
+name: Java CI com Maven e GitHub Actions
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Código
+      uses: actions/checkout@v4
+
+    - name: Configurar Java 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven' # Usa o cache do Maven para acelerar o build
+
+    - name: Rodar Testes com Maven (Requisito de CI/Qualidade)
+      # Executa o clean e o teste. Se o TestServiceTest falhar, o pipeline falha.
+      run: mvn clean test
+      
+    - name: Build do Pacote (Opcional, mas boa prática)
+      run: mvn package -DskipTests
