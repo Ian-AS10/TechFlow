@@ -56,4 +56,41 @@ public class TaskService {
                 .filter(task -> task.getId().equals(id))
                 .findFirst();
     }
+
+    // UPDATE (Commit #6)
+    /**
+     * Atualiza apenas o status de uma tarefa.
+     * @param id ID da tarefa a ser atualizada.
+     * @param newStatus Novo status da tarefa.
+     * @return true se a atualização foi bem-sucedida, false caso contrário.
+     */
+    public boolean updateTaskStatus(String id, Task.TaskStatus newStatus) {
+        Optional<Task> taskOpt = getTaskById(id);
+        if (taskOpt.isPresent()) {
+            Task task = taskOpt.get();
+            task.setStatus(newStatus);
+            System.out.println("Status da tarefa " + task.getTitle() + " atualizado para " + newStatus);
+            return true;
+        }
+        System.err.println("ERRO: Tarefa com ID " + id + " não encontrada para atualização.");
+        return false;
+    }
+
+    // DELETE (Commit #6)
+    /**
+     * Remove uma tarefa do repositório pelo ID.
+     * @param id ID da tarefa a ser excluída.
+     * @return true se a exclusão foi bem-sucedida, false caso contrário.
+     */
+    public boolean deleteTask(String id) {
+        Optional<Task> taskOpt = getTaskById(id);
+        if (taskOpt.isPresent()) {
+            Task task = taskOpt.get();
+            taskRepository.remove(task);
+            System.out.println("Tarefa excluída com sucesso: " + task.getTitle());
+            return true;
+        }
+        System.err.println("ERRO: Tarefa com ID " + id + " não encontrada para exclusão.");
+        return false;
+    }
 }

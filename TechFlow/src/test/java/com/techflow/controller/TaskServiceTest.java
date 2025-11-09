@@ -45,4 +45,31 @@ public class TaskServiceTest {
         // Verifica se a ordenação por prioridade está correta (5 deve vir antes de 3)
         assertTrue(tasks.get(0).getPriority() > tasks.get(1).getPriority(), "A primeira tarefa deve ter maior prioridade (5 > 3).");
     }
+
+    // Teste de Atualização
+    @Test
+    void testUpdateTaskStatus() {
+        // Pega a primeira tarefa (a de maior prioridade)
+        Task highPriorityTask = taskService.getAllTasks().get(0);
+        String id = highPriorityTask.getId();
+
+        boolean updated = taskService.updateTaskStatus(id, TaskStatus.DONE);
+        assertTrue(updated, "A atualização deve ser bem-sucedida.");
+        assertEquals(TaskStatus.DONE, taskService.getTaskById(id).get().getStatus(), "O status deve ser alterado para DONE.");
+
+        boolean notFound = taskService.updateTaskStatus("invalid-id", TaskStatus.IN_PROGRESS);
+        assertFalse(notFound, "A atualização deve falhar para um ID inválido.");
+    }
+
+    // Teste de Exclusão
+    @Test
+    void testDeleteTask() {
+        Task taskToDelete = taskService.getAllTasks().get(0);
+        String id = taskToDelete.getId();
+
+        boolean deleted = taskService.deleteTask(id);
+        assertTrue(deleted, "A exclusão deve ser bem-sucedida.");
+        assertTrue(taskService.getTaskById(id).isEmpty(), "A tarefa não deve mais existir.");
+        assertEquals(1, taskService.getAllTasks().size(), "O número de tarefas deve diminuir em 1.");
+    }
 }
