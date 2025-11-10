@@ -30,10 +30,9 @@ public class Task {
 
     /**
      * Construtor da Tarefa.
-     *
-     * @param title       Título da tarefa (Não pode ser vazio).
+     * @param title Título da tarefa (Não pode ser vazio).
      * @param description Descrição.
-     * @param priority    Prioridade (de 1 a 5).
+     * @param priority Prioridade (de 1 a 5).
      * @throws IllegalArgumentException Se o título for inválido.
      */
     public Task(String title, String description, int priority) {
@@ -99,6 +98,16 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
 
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    @Override
+    public String toString() {
+        String deliveryInfo = deliveryDate != null ? " | Entrega: " + deliveryDate : "";
+        return String.format("[ID: %s] Título: %s | Prioridade: %d | Status: %s%s",
+                id.substring(0, 4), title, priority, status, deliveryInfo);
     }
 }

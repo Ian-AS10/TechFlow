@@ -57,7 +57,7 @@ public class TaskService {
                 .findFirst();
     }
 
-    // UPDATE (Commit #6)
+    // UPDATE
     /**
      * Atualiza apenas o status de uma tarefa.
      * @param id ID da tarefa a ser atualizada.
@@ -76,7 +76,7 @@ public class TaskService {
         return false;
     }
 
-    // DELETE (Commit #6)
+    // DELETE
     /**
      * Remove uma tarefa do repositório pelo ID.
      * @param id ID da tarefa a ser excluída.

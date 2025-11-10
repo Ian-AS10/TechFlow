@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Classe principal para rodar a aplicação de gerenciamento de tarefas
  * em linha de comando, demonstrando o uso do TaskService.
- * Este arquivo ajuda a demonstrar o COMMIT #6 (CRUD funcional).
  */
 public class App {
 
@@ -29,7 +28,7 @@ public class App {
         System.out.println("\n--- LISTA INICIAL DE TAREFAS (Ordenadas por Prioridade) ---");
         displayTasks(taskService.getAllTasks());
 
-        // 2. UPDATE: Atualização de Status (Simula fluxo no Kanban) - Simula COMMIT #6
+        //Atualização de Status (Simula fluxo no Kanban)
         if (t1 != null) {
             taskService.updateTaskStatus(t1.getId(), Task.TaskStatus.IN_PROGRESS);
         }
@@ -40,7 +39,7 @@ public class App {
         System.out.println("\n--- LISTA APÓS MUDANÇA DE STATUS ---");
         displayTasks(taskService.getAllTasks());
 
-        // 3. DELETE: Exclusão de Tarefa (Simula finalização ou cancelamento) - Simula COMMIT #6
+        //Exclusão de Tarefa (Simula finalização ou cancelamento)
         if (t2 != null) {
             taskService.deleteTask(t2.getId());
         }
