@@ -93,4 +93,47 @@ public class TaskService {
         System.err.println("ERRO: Tarefa com ID " + id + " não encontrada para exclusão.");
         return false;
     }
+
+    // UPDATE (Detalhes Completos)
+    /**
+     * Atualiza o título, descrição e prioridade de uma tarefa existente.
+     * Deve garantir que a nova prioridade esteja entre 1 e 5.
+     *
+     * @param id ID da tarefa a ser atualizada.
+     * @param newTitle Novo título.
+     * @param newDescription Nova descrição.
+     * @param newPriority Nova prioridade (1 a 5).
+     * @return true se a atualização foi bem-sucedida, false caso contrário.
+     */
+    public boolean updateTaskDetails(String id, String newTitle, String newDescription, int newPriority) {
+        Optional<Task> taskOpt = getTaskById(id);
+
+        if (taskOpt.isPresent()) {
+            Task task = taskOpt.get();
+            try {
+                // Validação de Prioridade.
+                if (newPriority < 1 || newPriority > 5) {
+                    throw new IllegalArgumentException("A prioridade deve ser entre 1 e 5.");
+                }
+
+                // Adiciona validação de título não vazio
+                if (newTitle == null || newTitle.trim().isEmpty()) {
+                    throw new IllegalArgumentException("O título da tarefa não pode ser vazio.");
+                }
+
+                task.setTitle(newTitle);
+                task.setDescription(newDescription);
+                task.setPriority(newPriority);
+
+                System.out.println("Detalhes da tarefa " + task.getTitle() + " atualizados com sucesso.");
+                return true;
+
+            } catch (IllegalArgumentException e) {
+                System.err.println("❌ ERRO ao atualizar detalhes da tarefa: " + e.getMessage());
+                return false;
+            }
+        }
+        System.err.println("❌ ERRO: Tarefa com ID " + id.substring(0, 4) + " não encontrada para atualização de detalhes.");
+        return false;
+    }
 }
